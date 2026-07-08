@@ -1,0 +1,100 @@
+-- =========================================
+-- PROCEDIMIENTO CREAR ACTIVIDAD GRUPAL
+-- =========================================
+
+CREATE OR REPLACE PROCEDURE CREAR_ACTIVIDAD(
+    P_NOMBRE_ACTIVIDAD        IN ACTIVIDAD_GRUPAL.NOMBRE_ACTIVIDAD%TYPE,
+    P_DESCRIPCION_ACTIVIDAD   IN ACTIVIDAD_GRUPAL.DESCRIPCION_ACTIVIDAD%TYPE,
+    P_FECHA_ACTIVIDAD         IN ACTIVIDAD_GRUPAL.FECHA_ACTIVIDAD%TYPE,
+    P_LUGAR_ACTIVIDAD         IN ACTIVIDAD_GRUPAL.LUGAR_ACTIVIDAD%TYPE,
+    P_HR_INICIO_ACTIVIDAD     IN ACTIVIDAD_GRUPAL.HR_INICIO_ACTIVIDAD%TYPE,
+    P_HR_FIN_ACTIVIDAD        IN ACTIVIDAD_GRUPAL.HR_FIN_ACTIVIDAD%TYPE,
+    P_CANTIDAD_PARTICIPANTES  IN ACTIVIDAD_GRUPAL.CANTIDAD_PARTICIPANTES%TYPE,
+    P_ID_PSICOLOGO            IN ACTIVIDAD_GRUPAL.ID_PSICOLOGO%TYPE,
+    P_ID_PROGRAMA             IN ACTIVIDAD_GRUPAL.ID_PROGRAMA%TYPE,
+    P_ID_ACTIVIDAD            OUT ACTIVIDAD_GRUPAL.ID_ACTIVIDAD%TYPE,
+    P_RESULTADO               OUT VARCHAR2
+)
+IS
+    V_EXISTE_PSICOLOGO NUMBER;
+    V_EXISTE_PROGRAMA  NUMBER;
+BEGIN
+
+    -- Validar cantidad de participantes
+    IF P_CANTIDAD_PARTICIPANTES <= 0 THEN
+        P_ID_ACTIVIDAD := NULL;
+        P_RESULTADO := 'Error: La cantidad de participantes debe ser mayor a 0.';
+    ELSE
+
+        -- Verificar si existe el psicólogo
+        SELECT COUNT(*)
+        INTO V_EXISTE_PSICOLOGO
+        FROM PSICOLOGO
+        WHERE ID_PSICOLOGO = P_ID_PSICOLOGO;
+
+        -- Verificar si existe el programa
+        SELECT COUNT(*)
+        INTO V_EXISTE_PROGRAMA
+        FROM PROGRAMAS
+        WHERE ID_PROGRAMA = P_ID_PROGRAMA;
+
+        IF V_EXISTE_PSICOLOGO = 0 THEN
+
+            P_ID_ACTIVIDAD := NULL;
+            P_RESULTADO := 'Error: El psicólogo no existe.';
+
+        ELSIF V_EXISTE_PROGRAMA = 0 THEN
+
+            P_ID_ACTIVIDAD := NULL;
+            P_RESULTADO := 'Error: El programa no existe.';
+
+        ELSE
+
+            P_ID_ACTIVIDAD := SEQ_ACTIVIDAD.NEXTVAL;
+
+            INSERT INTO ACTIVIDAD_GRUPAL(
+                ID_ACTIVIDAD,
+                NOMBRE_ACTIVIDAD,
+                DESCRIPCION_ACTIVIDAD,
+                FECHA_ACTIVIDAD,
+                LUGAR_ACTIVIDAD,
+                HR_INICIO_ACTIVIDAD,
+                HR_FIN_ACTIVIDAD,
+                CANTIDAD_PARTICIPANTES,
+                ID_PSICOLOGO,
+                ID_PROGRAMA
+            )
+            VALUES(
+                P_ID_ACTIVIDAD,
+                P_NOMBRE_ACTIVIDAD,
+                P_DESCRIPCION_ACTIVIDAD,
+                P_FECHA_ACTIVIDAD,
+                P_LUGAR_ACTIVIDAD,
+                P_HR_INICIO_ACTIVIDAD,
+                P_HR_FIN_ACTIVIDAD,
+                P_CANTIDAD_PARTICIPANTES,
+                P_ID_PSICOLOGO,
+                P_ID_PROGRAMA
+            );
+
+            COMMIT;
+            P_RESULTADO := 'Actividad grupal registrada correctamente.';
+        END IF;
+    END IF;
+
+EXCEPTION
+    WHEN VALUE_ERROR THEN
+        ROLLBACK;
+        P_ID_ACTIVIDAD := NULL;
+        P_RESULTADO := 'Error: Valor inválido.';
+    WHEN DUP_VAL_ON_INDEX THEN
+        ROLLBACK;
+        P_ID_ACTIVIDAD := NULL;
+        P_RESULTADO := 'Error: Registro duplicado.';
+    WHEN OTHERS THEN
+        ROLLBACK;
+        P_ID_ACTIVIDAD := NULL;
+        P_RESULTADO := 'Error: ' || SQLERRM;
+
+END;
+/
