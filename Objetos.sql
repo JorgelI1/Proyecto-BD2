@@ -159,3 +159,102 @@ CREATE TABLE actividad_grupal (
         FOREIGN KEY (id_programa)
         REFERENCES programas(id_programa)
 );
+
+-- creacion de tabla auditoria 
+CREATE TABLE auditoria_estado_cita (
+    id_transaccion   NUMBER(10) PRIMARY KEY,
+    tabla            VARCHAR2(25),
+    id_cita          NUMBER(10),
+    id_paciente      NUMBER(10),
+    id_psicologo     NUMBER(10),
+    tipo_transaccion VARCHAR2(25),
+    estado_cita      VARCHAR2(20),
+    usuario          VARCHAR2(20),
+    fecha            DATE
+);
+
+--creacion del trigger
+
+CREATE OR REPLACE TRIGGER trg_auditoria_cita
+AFTER INSERT OR UPDATE OR DELETE ON cita FOR EACH ROW
+BEGIN
+    IF INSERTING THEN
+        -- cuando se crea esta pendiente la cita
+        INSERT INTO auditoria_estado_cita (
+            id_transaccion, 
+            tabla, 
+            id_cita, 
+            id_paciente, 
+            id_psicologo, 
+            tipo_transaccion, 
+            estado_cita, 
+            usuario, 
+            fecha
+        )
+        VALUES (
+            seq_auditoria_cita.NEXTVAL, 
+            'CITA', 
+            :NEW.id_cita, 
+            :NEW.id_paciente, 
+            :NEW.id_psicologo, 
+            'INSERT', 
+            :NEW.estado_cita,
+            USER, 
+            SYSDATE
+        );
+
+    ELSIF UPDATING THEN
+        -- la tabla de auditoria se enfoca en si el estado de la cita cambio o no, si se modifica por algun motivo la fecha por ejemplo no se tomará en cuenta
+        IF :OLD.estado_cita != :NEW.estado_cita THEN
+            INSERT INTO auditoria_estado_cita (
+                id_transaccion, 
+                tabla, 
+                id_cita, 
+                id_paciente, 
+                id_psicologo, 
+                tipo_transaccion, 
+                estado_cita, 
+                usuario, 
+                fecha
+            ) 
+            VALUES (
+                seq_auditoria_cita.NEXTVAL, 
+                'CITA', 
+                :NEW.id_cita, 
+                :NEW.id_paciente, 
+                :NEW.id_psicologo, 
+                'ACTUALIZACION ESTADO', 
+                :NEW.estado_cita, 
+                USER, 
+                SYSDATE
+            );
+        END IF;
+
+    ELSIF DELETING THEN
+        -- Se audita si la cita se elimina del sistema
+        INSERT INTO auditoria_estado_cita (
+            id_transaccion, 
+            tabla, 
+            id_cita, 
+            id_paciente, 
+            id_psicologo, 
+            tipo_transaccion, 
+            estado_cita, 
+            usuario, 
+            fecha
+        ) 
+        VALUES (
+            seq_auditoria_cita.NEXTVAL, 
+            'CITA', 
+            :OLD.id_cita, 
+            :OLD.id_paciente, 
+            :OLD.id_psicologo, 
+            'DELETE', 
+            :OLD.estado_cita, 
+            USER, 
+            SYSDATE
+        );
+    END IF;
+
+END trg_auditoria_cita;
+/
