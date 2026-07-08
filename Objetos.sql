@@ -1,7 +1,4 @@
--- =========================================
 -- TABLA PACIENTE
--- =========================================
-
 CREATE TABLE paciente (
     id_paciente               NUMBER,
     primer_nombre_paciente    VARCHAR2(50) NOT NULL,
@@ -25,10 +22,7 @@ CREATE TABLE paciente (
     CONSTRAINT ck_paciente_asegurado CHECK (asegurado IN ('SI', 'NO'))
 );
 
--- =========================================
 -- TABLA TIPO_TELEFONO
--- =========================================
-
 CREATE TABLE tipo_telefono (
     id_tipotel           NUMBER,
     descripcion_telefono VARCHAR2(50) NOT NULL,
@@ -36,10 +30,7 @@ CREATE TABLE tipo_telefono (
 );
 
 
--- =========================================
 -- TABLA TELEFONO
--- =========================================
-
 CREATE TABLE telefono (
     telefono    NUMBER NOT NULL,
     id_paciente NUMBER NOT NULL,
@@ -54,10 +45,7 @@ CREATE TABLE telefono (
 );
 
 
--- =========================================
 -- TABLA PSICOLOGO
--- =========================================
-
 CREATE TABLE psicologo (
     id_psicologo               NUMBER,
     primer_nombre_psicologo    VARCHAR2(50) NOT NULL,
@@ -69,10 +57,8 @@ CREATE TABLE psicologo (
     CONSTRAINT uk_psicologo_cedula UNIQUE (cedula_psicologo)
 );
 
--- =========================================
--- TABLA PROGRAMAS
--- =========================================
 
+-- TABLA PROGRAMAS
 CREATE TABLE programas (
     id_programa          NUMBER,
     nombre_programa      VARCHAR2(100) NOT NULL,
@@ -82,10 +68,7 @@ CREATE TABLE programas (
     CONSTRAINT uk_programas_nombre UNIQUE (nombre_programa)
 );
 
--- =========================================
 -- TABLA CITA
--- =========================================
-
 CREATE TABLE cita (
     id_cita         NUMBER,
     fecha_cita      DATE NOT NULL,
@@ -107,10 +90,8 @@ CREATE TABLE cita (
         REFERENCES psicologo(id_psicologo)
 );
 
--- =========================================
--- TABLA REGISTRO_MEDICO
--- =========================================
 
+-- TABLA REGISTRO_MEDICO
 CREATE TABLE registro_medico (
     id_registro     NUMBER,
     numero_registro NUMBER NOT NULL,
@@ -133,10 +114,7 @@ CREATE TABLE registro_medico (
         REFERENCES cita(id_cita)
 );
 
--- =========================================
 -- TABLA ACTIVIDAD_GRUPAL
--- =========================================
-
 CREATE TABLE actividad_grupal (
     id_actividad           NUMBER,
     nombre_actividad       VARCHAR2(100) NOT NULL,
@@ -160,7 +138,7 @@ CREATE TABLE actividad_grupal (
         REFERENCES programas(id_programa)
 );
 
--- creacion de tabla auditoria 
+-- Creacion de tabla auditoria 
 CREATE TABLE auditoria_estado_cita (
     id_transaccion   NUMBER(10) PRIMARY KEY,
     tabla            VARCHAR2(25),
@@ -173,13 +151,12 @@ CREATE TABLE auditoria_estado_cita (
     fecha            DATE
 );
 
---creacion del trigger
-
+--Creacion del trigger
 CREATE OR REPLACE TRIGGER trg_auditoria_cita
 AFTER INSERT OR UPDATE OR DELETE ON cita FOR EACH ROW
 BEGIN
     IF INSERTING THEN
-        -- cuando se crea esta pendiente la cita
+        -- Cuando se crea esta pendiente la cita
         INSERT INTO auditoria_estado_cita (
             id_transaccion, 
             tabla, 
@@ -204,7 +181,7 @@ BEGIN
         );
 
     ELSIF UPDATING THEN
-        -- la tabla de auditoria se enfoca en si el estado de la cita cambio o no, si se modifica por algun motivo la fecha por ejemplo no se tomará en cuenta
+        -- La tabla de auditoria se enfoca en si el estado de la cita cambio o no, si se modifica por algun motivo la fecha por ejemplo no se tomará en cuenta
         IF :OLD.estado_cita != :NEW.estado_cita THEN
             INSERT INTO auditoria_estado_cita (
                 id_transaccion, 
@@ -255,7 +232,7 @@ BEGIN
             SYSDATE
         );
     END IF;
-    
+
 EXCEPTION
     WHEN VALUE_ERROR THEN
         ROLLBACK;
