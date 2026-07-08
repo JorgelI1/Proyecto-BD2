@@ -1,6 +1,4 @@
--- =========================================
 -- PROCEDIMIENTO CARGAR PACIENTES
--- =========================================
 
 CREATE OR REPLACE PROCEDURE cargar_pacientes (
     p_primer_nombre_paciente    IN paciente.primer_nombre_paciente%TYPE,
@@ -16,7 +14,7 @@ CREATE OR REPLACE PROCEDURE cargar_pacientes (
     p_sede                      IN paciente.sede%TYPE,
     p_discapacidad              IN paciente.discapacidad%TYPE,
     p_correo_utp                IN paciente.correo_utp%TYPE,
-    p_rol_paciente              OUT paciente.rol_paciente%TYPE,
+    p_rol_paciente              IN paciente.rol_paciente%TYPE,
     p_asegurado                 IN paciente.asegurado%TYPE,
     p_id_paciente               OUT paciente.id_paciente%TYPE,
     p_mensaje                   OUT VARCHAR2
