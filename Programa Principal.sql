@@ -106,12 +106,7 @@ BEGIN
     DBMS_OUTPUT.PUT_LINE(v_mensaje);
     DBMS_OUTPUT.PUT_LINE('ID Paciente 1: ' || v_id_paciente_1);
     DBMS_OUTPUT.PUT_LINE('ID Tipo Telefono Paciente 1: ' || v_id_tipotel_1);
-    --Aprueba la cita de Jorge
-    UPDATE cita
-    SET estado_cita = 'APROBADA'
-    WHERE id_cita = v_id_cita_1;
 
-    DBMS_OUTPUT.PUT_LINE('Cita de Jorge cambiada a APROBADA');
 
     -- PACIENTE 2: JOHN BARAHONA
 
@@ -172,7 +167,6 @@ BEGIN
     DBMS_OUTPUT.PUT_LINE('ID Paciente 3: ' || v_id_paciente_3);
     DBMS_OUTPUT.PUT_LINE('ID Tipo Telefono Paciente 3: ' || v_id_tipotel_3);
 
-
     -- CITAS
 
     registrar_cita(
@@ -186,6 +180,9 @@ BEGIN
         v_resultado
     );
 
+    UPDATE cita
+    SET estado_cita = 'APROBADA'
+    WHERE id_cita = v_id_cita_1;
     DBMS_OUTPUT.PUT_LINE(v_resultado);
     DBMS_OUTPUT.PUT_LINE('ID Cita 1: ' || v_id_cita_1);
 
