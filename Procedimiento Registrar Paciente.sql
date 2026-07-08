@@ -25,7 +25,7 @@ AS
 BEGIN
 
     p_id_paciente := seq_paciente.NEXTVAL;
-    p_rol_paciente := UPPER(p_rol_paciente);
+    p_rol_paciente := p_rol_paciente;
 
     INSERT INTO paciente (
         id_paciente,

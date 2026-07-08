@@ -22,7 +22,7 @@ BEGIN
     )
     VALUES (
         p_id_programa,
-        UPPER(p_nombre_programa),
+        p_nombre_programa,
         p_descripcion_programa,
         p_poblacion_objetivo
     );
