@@ -255,6 +255,20 @@ BEGIN
             SYSDATE
         );
     END IF;
+    
+EXCEPTION
+    WHEN VALUE_ERROR THEN
+        ROLLBACK;
+        P_ID_ACTIVIDAD := NULL;
+        P_RESULTADO := 'Error: Valor inválido.';
+    WHEN DUP_VAL_ON_INDEX THEN
+        ROLLBACK;
+        P_ID_ACTIVIDAD := NULL;
+        P_RESULTADO := 'Error: Registro duplicado.';
+    WHEN OTHERS THEN
+        ROLLBACK;
+        P_ID_ACTIVIDAD := NULL;
+        P_RESULTADO := 'Error: ' || SQLERRM;
 
 END trg_auditoria_cita;
 /
