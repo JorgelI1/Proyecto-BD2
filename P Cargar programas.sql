@@ -1,6 +1,4 @@
--- =========================================
 -- PROCEDIMIENTO CARGAR PROGRAMAS
--- =========================================
 
 CREATE OR REPLACE PROCEDURE CARGAR_PROGRAMAS (
     p_nombre_programa      IN programas.nombre_programa%TYPE,

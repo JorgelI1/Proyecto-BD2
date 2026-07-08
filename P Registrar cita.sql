@@ -1,6 +1,4 @@
--- =========================================
 -- PROCEDIMIENTO REGISTRAR CITA
--- =========================================
 
 CREATE OR REPLACE PROCEDURE REGISTRAR_CITA(
     P_FECHA_CITA      IN CITA.FECHA_CITA%TYPE,
@@ -9,7 +7,6 @@ CREATE OR REPLACE PROCEDURE REGISTRAR_CITA(
     P_MOTIVO_CITA     IN CITA.MOTIVO_CITA%TYPE,
     P_ID_PACIENTE     IN CITA.ID_PACIENTE%TYPE,
     P_ID_PSICOLOGO    IN CITA.ID_PSICOLOGO%TYPE,
-    P_ESTADO_CITA     IN CITA.ESTADO_CITA%TYPE,
     P_ID_CITA         OUT CITA.ID_CITA%TYPE,
     P_RESULTADO       OUT VARCHAR2
 )
@@ -53,7 +50,6 @@ BEGIN
                 FECHA_CITA,
                 HORA_INICIO,
                 HORA_FIN,
-                ESTADO_CITA,
                 MOTIVO_CITA,
                 FECHA_SOLICITUD,
                 ID_PACIENTE,
@@ -64,7 +60,6 @@ BEGIN
                 P_FECHA_CITA,
                 P_HORA_INICIO,
                 P_HORA_FIN,
-                P_ESTADO_CITA,
                 P_MOTIVO_CITA,
                 SYSDATE,
                 P_ID_PACIENTE,
