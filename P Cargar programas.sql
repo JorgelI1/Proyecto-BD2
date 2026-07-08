@@ -2,7 +2,7 @@
 -- PROCEDIMIENTO CARGAR PROGRAMAS
 -- =========================================
 
-CREATE OR REPLACE PROCEDURE cargar_programas (
+CREATE OR REPLACE PROCEDURE CARGAR_PROGRAMAS (
     p_nombre_programa      IN programas.nombre_programa%TYPE,
     p_descripcion_programa IN programas.descripcion_programa%TYPE,
     p_poblacion_objetivo   IN programas.poblacion_objetivo%TYPE,
@@ -13,7 +13,6 @@ AS
 BEGIN
 
     p_id_programa := seq_programa.NEXTVAL;
-
     INSERT INTO programas (
         id_programa,
         nombre_programa,
@@ -30,22 +29,18 @@ BEGIN
     COMMIT;
 
     p_mensaje := 'Programa registrado correctamente.';
-
 EXCEPTION
     WHEN DUP_VAL_ON_INDEX THEN
         ROLLBACK;
         p_id_programa := NULL;
         p_mensaje := 'Error: El nombre del programa ya existe.';
-
     WHEN VALUE_ERROR THEN
         ROLLBACK;
         p_id_programa := NULL;
         p_mensaje := 'Error: Valor invalido.';
-
     WHEN OTHERS THEN
         ROLLBACK;
         p_id_programa := NULL;
         p_mensaje := 'ERROR: ' || SQLERRM;
-
 END cargar_programas;
 /

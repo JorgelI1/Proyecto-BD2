@@ -16,7 +16,7 @@ CREATE OR REPLACE PROCEDURE cargar_pacientes (
     p_sede                      IN paciente.sede%TYPE,
     p_discapacidad              IN paciente.discapacidad%TYPE,
     p_correo_utp                IN paciente.correo_utp%TYPE,
-    p_rol_paciente              IN OUT paciente.rol_paciente%TYPE,
+    p_rol_paciente              OUT paciente.rol_paciente%TYPE,
     p_asegurado                 IN paciente.asegurado%TYPE,
     p_id_paciente               OUT paciente.id_paciente%TYPE,
     p_mensaje                   OUT VARCHAR2
@@ -25,7 +25,6 @@ AS
 BEGIN
 
     p_id_paciente := seq_paciente.NEXTVAL;
-    p_rol_paciente := p_rol_paciente;
 
     INSERT INTO paciente (
         id_paciente,
