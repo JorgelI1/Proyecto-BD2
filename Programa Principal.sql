@@ -1,24 +1,21 @@
 SET SERVEROUTPUT ON;
 
 DECLARE
-    -- Variables generales
     v_mensaje        VARCHAR2(250);
     v_resultado      VARCHAR2(250);
 
-    -- Variables de salida
     v_id_programa    PROGRAMAS.ID_PROGRAMA%TYPE;
     v_id_psicologo   PSICOLOGO.ID_PSICOLOGO%TYPE;
     v_id_paciente    PACIENTE.ID_PACIENTE%TYPE;
+    v_id_tipotel     TIPO_TELEFONO.ID_TIPOTEL%TYPE;
     v_id_cita        CITA.ID_CITA%TYPE;
     v_id_actividad   ACTIVIDAD_GRUPAL.ID_ACTIVIDAD%TYPE;
     v_id_registro    REGISTRO_MEDICO.ID_REGISTRO%TYPE;
 
-    -- Variables especiales
     v_total_cargados NUMBER;
     v_estado_clinico REGISTRO_MEDICO.ESTADO_CLINICO%TYPE;
 
 BEGIN
-    -- 1. CARGAR PROGRAMAS PREDEFINIDOS
 
     cargar_programas_principales(
         v_total_cargados,
@@ -28,35 +25,27 @@ BEGIN
     DBMS_OUTPUT.PUT_LINE(v_mensaje);
     DBMS_OUTPUT.PUT_LINE('Total de programas cargados: ' || v_total_cargados);
 
-    /*-- 2. CARGAR UN PROGRAMA MANUAL
-    cargar_programas(
-        'NOMBRE DEL PROGRAMA',
-        'DESCRIPCION DEL PROGRAMA',
-        'POBLACION OBJETIVO',
-        v_id_programa,
-        v_mensaje
-    );*/
+    SELECT MIN(id_programa)
+    INTO v_id_programa
+    FROM programas;
 
-    DBMS_OUTPUT.PUT_LINE(v_mensaje);
-    DBMS_OUTPUT.PUT_LINE('ID Programa: ' || v_id_programa);
+    DBMS_OUTPUT.PUT_LINE('ID Programa usado: ' || v_id_programa);
 
 
-    -- 3. REGISTRAR PSICOLOGO
     registrar_psicologo(
         v_id_psicologo,
         'PRIMER NOMBRE',
         'PRIMER APELLIDO',
-        'CEDULA',
-        'correo@utp.ac.pa',
+        'CEDULA123',
+        'correo123@utp.ac.pa',
         'PSICOLOGO',
         v_resultado
     );
+
     DBMS_OUTPUT.PUT_LINE(v_resultado);
     DBMS_OUTPUT.PUT_LINE('ID Psicologo: ' || v_id_psicologo);
 
 
-
-    -- 4. REGISTRAR PACIENTE
     cargar_pacientes(
         'Jorge',
         'Luis',
@@ -73,10 +62,8 @@ BEGIN
         'jorge.li@utp.ac.pa',
         'ESTUDIANTE',
         'SI',
-
         61234567,
         'CELULAR',
-
         v_id_paciente,
         v_id_tipotel,
         v_mensaje
@@ -87,8 +74,6 @@ BEGIN
     DBMS_OUTPUT.PUT_LINE('ID Tipo Telefono: ' || v_id_tipotel);
 
 
-
-    -- 5. REGISTRAR CITA
     registrar_cita(
         TO_DATE('10/07/2026', 'DD/MM/YYYY'),
         TO_DATE('10/07/2026 08:00', 'DD/MM/YYYY HH24:MI'),
@@ -105,7 +90,6 @@ BEGIN
     DBMS_OUTPUT.PUT_LINE('ID Cita: ' || v_id_cita);
 
 
-    -- 6. CREAR REGISTRO MEDICO (solo citas aprobadas)
     v_estado_clinico := NULL;
 
     crear_registro_medico(
@@ -125,8 +109,6 @@ BEGIN
     DBMS_OUTPUT.PUT_LINE('Estado clinico: ' || v_estado_clinico);
 
 
-    -- 7. CREAR ACTIVIDAD GRUPAL
-
     crear_actividad(
         'NOMBRE DE LA ACTIVIDAD',
         'DESCRIPCION DE LA ACTIVIDAD',
@@ -143,7 +125,6 @@ BEGIN
 
     DBMS_OUTPUT.PUT_LINE(v_resultado);
     DBMS_OUTPUT.PUT_LINE('ID Actividad: ' || v_id_actividad);
-
 
 EXCEPTION
     WHEN OTHERS THEN

@@ -16,7 +16,6 @@ IS
     V_EXISTE_PROGRAMA  NUMBER;
 BEGIN
 
-    -- Validar cantidad de participantes
     IF P_CANTIDAD_PARTICIPANTES <= 0 THEN
 
         P_ID_ACTIVIDAD := NULL;
@@ -29,13 +28,11 @@ BEGIN
 
     ELSE
 
-        -- Verificar si existe el psicólogo
         SELECT COUNT(*)
         INTO V_EXISTE_PSICOLOGO
         FROM PSICOLOGO
         WHERE ID_PSICOLOGO = P_ID_PSICOLOGO;
 
-        -- Verificar si existe el programa
         SELECT COUNT(*)
         INTO V_EXISTE_PROGRAMA
         FROM PROGRAMAS
@@ -81,6 +78,7 @@ BEGIN
             );
 
             COMMIT;
+
             P_RESULTADO := 'Actividad grupal registrada correctamente.';
 
         END IF;
