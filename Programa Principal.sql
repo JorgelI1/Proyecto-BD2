@@ -58,27 +58,33 @@ BEGIN
 
     -- 4. REGISTRAR PACIENTE
     cargar_pacientes(
-        'PRIMER NOMBRE',
-        'SEGUNDO NOMBRE',
-        'PRIMER APELLIDO',
-        'SEGUNDO APELLIDO',
-        'CEDULA',
-        TO_DATE('01/01/2000', 'DD/MM/YYYY'),
-        'PROVINCIA',
-        'DISTRITO',
-        'CORREGIMIENTO',
+        'Jorge',
+        'Luis',
+        'Li',
+        'Luo',
+        '3-759-2256',
+        TO_DATE('28/03/2006', 'DD/MM/YYYY'),
+        'PANAMA OESTE',
+        'LA CHORRERA',
+        'BARRIO BALBOA',
         'M',
-        'SEDE',
-        'NINGUNA',
-        'correo@utp.ac.pa',
+        'CAMPUS CENTRAL',
+        'NO',
+        'jorge.li@utp.ac.pa',
         'ESTUDIANTE',
         'SI',
+
+        61234567,
+        'CELULAR',
+
         v_id_paciente,
+        v_id_tipotel,
         v_mensaje
     );
 
     DBMS_OUTPUT.PUT_LINE(v_mensaje);
     DBMS_OUTPUT.PUT_LINE('ID Paciente: ' || v_id_paciente);
+    DBMS_OUTPUT.PUT_LINE('ID Tipo Telefono: ' || v_id_tipotel);
 
 
 
