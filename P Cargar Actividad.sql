@@ -24,6 +24,9 @@ BEGIN
     IF P_CANTIDAD_PARTICIPANTES <= 0 THEN
         P_ID_ACTIVIDAD := NULL;
         P_RESULTADO := 'Error: La cantidad de participantes debe ser mayor a 0.';
+    ELSE IF P_HR_FIN_ACTIVIDAD <= P_HR_INICIO_ACTIVIDAD THEN
+        P_ID_ACTIVIDAD := NULL;
+        P_RESULTADO := 'Error: La hora final debe ser mayor que la hora de inicio.';
     ELSE
 
         -- Verificar si existe el psicólogo

@@ -17,6 +17,7 @@ IS
     V_EXISTE_PSICOLOGO NUMBER;
     V_EXISTE_PACIENTE  NUMBER;
     V_EXISTE_CITA      NUMBER;
+    V_APROBADO_CITA    NUMBER;
 BEGIN
 
     -- Verificar si existe el psicólogo
@@ -39,6 +40,15 @@ BEGIN
     AND ID_PACIENTE = P_ID_PACIENTE
     AND ID_PSICOLOGO = P_ID_PSICOLOGO;
 
+    -- Verificar si existe la cita aprobada con ese paciente y psicólogo
+    SELECT COUNT(*)
+    INTO V_APROBADO_CITA
+    FROM CITA
+    WHERE ID_CITA = P_ID_CITA
+    AND ID_PACIENTE = P_ID_PACIENTE
+    AND ID_PSICOLOGO = P_ID_PSICOLOGO
+    AND ESTADO_CITA = 'APROBADA';
+
     IF V_EXISTE_PSICOLOGO = 0 THEN
         P_ID_REGISTRO := NULL;
         P_RESULTADO := 'Error: El psicólogo no existe.';
@@ -49,7 +59,11 @@ BEGIN
 
     ELSIF V_EXISTE_CITA = 0 THEN
         P_ID_REGISTRO := NULL;
-        P_RESULTADO := 'Error: La cita no existe o no corresponde al paciente y psicólogo.';
+        P_RESULTADO := 'Error: La cita no existe para el paciente y psicólogo ingresado.';
+
+    ELSIF V_APROBADO_CITA = 0 THEN
+        P_ID_REGISTRO := NULL;
+        P_RESULTADO := 'Error: La cita no está aprobada.';
 
     ELSE
         -- Si no se envia estado clinico, se pone en seguimiento por defecto
