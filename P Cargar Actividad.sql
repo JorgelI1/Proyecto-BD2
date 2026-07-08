@@ -1,7 +1,3 @@
--- =========================================
--- PROCEDIMIENTO CREAR ACTIVIDAD GRUPAL
--- =========================================
-
 CREATE OR REPLACE PROCEDURE CREAR_ACTIVIDAD(
     P_NOMBRE_ACTIVIDAD        IN ACTIVIDAD_GRUPAL.NOMBRE_ACTIVIDAD%TYPE,
     P_DESCRIPCION_ACTIVIDAD   IN ACTIVIDAD_GRUPAL.DESCRIPCION_ACTIVIDAD%TYPE,
@@ -22,11 +18,15 @@ BEGIN
 
     -- Validar cantidad de participantes
     IF P_CANTIDAD_PARTICIPANTES <= 0 THEN
+
         P_ID_ACTIVIDAD := NULL;
         P_RESULTADO := 'Error: La cantidad de participantes debe ser mayor a 0.';
-    ELSE IF P_HR_FIN_ACTIVIDAD <= P_HR_INICIO_ACTIVIDAD THEN
+
+    ELSIF P_HR_FIN_ACTIVIDAD <= P_HR_INICIO_ACTIVIDAD THEN
+
         P_ID_ACTIVIDAD := NULL;
         P_RESULTADO := 'Error: La hora final debe ser mayor que la hora de inicio.';
+
     ELSE
 
         -- Verificar si existe el psicólogo
@@ -82,7 +82,9 @@ BEGIN
 
             COMMIT;
             P_RESULTADO := 'Actividad grupal registrada correctamente.';
+
         END IF;
+
     END IF;
 
 EXCEPTION
@@ -90,10 +92,12 @@ EXCEPTION
         ROLLBACK;
         P_ID_ACTIVIDAD := NULL;
         P_RESULTADO := 'Error: Valor inválido.';
+
     WHEN DUP_VAL_ON_INDEX THEN
         ROLLBACK;
         P_ID_ACTIVIDAD := NULL;
         P_RESULTADO := 'Error: Registro duplicado.';
+
     WHEN OTHERS THEN
         ROLLBACK;
         P_ID_ACTIVIDAD := NULL;
