@@ -4,6 +4,7 @@ CREATE OR REPLACE PROCEDURE SP_REGISTRAR_PSICOLOGO(
     P_PRIMER_APELLIDO           IN PSICOLOGO.PRIMER_APELLIDO_PSICOLOGO%TYPE,
     P_CEDULA                    IN PSICOLOGO.CEDULA_PSICOLOGO%TYPE,
     P_CORREO                    IN PSICOLOGO.CORREO_UTP%TYPE,
+    P_CARGO                     IN PSICOLOGO.CARGO_PSICOLOGO%TYPE,
     P_RESULTADO                 OUT VARCHAR2
 )
 IS
@@ -25,6 +26,7 @@ BEGIN
             PRIMER_NOMBRE_PSICOLOGO,
             PRIMER_APELLIDO_PSICOLOGO,
             CEDULA_PSICOLOGO,
+            CARGO_PSICOLOGO,
             CORREO_UTP
         )
         VALUES(
@@ -32,6 +34,7 @@ BEGIN
             P_PRIMER_NOMBRE,
             P_PRIMER_APELLIDO,
             P_CEDULA,
+            P_CARGO,
             P_CORREO
         );
 
