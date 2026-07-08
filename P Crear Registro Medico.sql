@@ -1,6 +1,4 @@
--- =========================================
 -- PROCEDIMIENTO CREAR REGISTRO MEDICO
--- =========================================
 
 CREATE OR REPLACE PROCEDURE CREAR_REGISTRO_MEDICO(
     P_NUMERO_REGISTRO IN REGISTRO_MEDICO.NUMERO_REGISTRO%TYPE,
