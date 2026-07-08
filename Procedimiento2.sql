@@ -47,21 +47,21 @@ BEGIN
     )
     VALUES (
         p_id_paciente,
-        UPPER(p_primer_nombre_paciente),
-        UPPER(p_segundo_nombre_paciente),
-        UPPER(p_primer_apellido_paciente),
-        UPPER(p_segundo_apellido_paciente),
+        p_primer_nombre_paciente,
+        p_segundo_nombre_paciente,
+        p_primer_apellido_paciente,
+        p_segundo_apellido_paciente,
         p_cedula,
         p_fecha_nacimiento,
-        UPPER(p_provincia),
-        UPPER(p_distrito),
-        UPPER(p_corregimiento),
-        UPPER(p_sexo),
-        UPPER(p_sede),
-        UPPER(p_discapacidad),
-        LOWER(p_correo_utp),
+        p_provincia,
+        p_distrito,
+        p_corregimiento,
+        p_sexo,
+        p_sede,
+        p_discapacidad,
+        p_correo_utp,
         p_rol_paciente,
-        UPPER(p_asegurado)
+        p_asegurado
     );
 
     COMMIT;
