@@ -44,16 +44,14 @@ BEGIN
     DBMS_OUTPUT.PUT_LINE(v_mensaje);
     DBMS_OUTPUT.PUT_LINE('Total de programas cargados: ' || v_total_cargados);
 
-
-
-    -- 2. CARGAR UN PROGRAMA MANUAL
+    /*-- 2. CARGAR UN PROGRAMA MANUAL
     cargar_programas(
         'NOMBRE DEL PROGRAMA',
         'DESCRIPCION DEL PROGRAMA',
         'POBLACION OBJETIVO',
         v_id_programa,
         v_mensaje
-    );
+    );*/
 
     DBMS_OUTPUT.PUT_LINE(v_mensaje);
     DBMS_OUTPUT.PUT_LINE('ID Programa: ' || v_id_programa);
