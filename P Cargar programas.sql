@@ -2,7 +2,7 @@
 -- PROCEDIMIENTO CARGAR PROGRAMAS
 -- =========================================
 
-CREATE OR REPLACE PROCEDURE cargar_programas (
+CREATE OR REPLACE PROCEDURE CARGAR_PROGRAMAS (
     p_nombre_programa      IN programas.nombre_programa%TYPE,
     p_descripcion_programa IN programas.descripcion_programa%TYPE,
     p_poblacion_objetivo   IN programas.poblacion_objetivo%TYPE,

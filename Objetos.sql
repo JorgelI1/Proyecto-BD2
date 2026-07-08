@@ -91,7 +91,7 @@ CREATE TABLE cita (
     fecha_cita      DATE NOT NULL,
     hora_inicio     DATE NOT NULL,
     hora_fin        DATE NOT NULL,
-    estado_cita     VARCHAR2(20) NOT NULL,
+    estado_cita     VARCHAR2(20) DEFAULT 'PENDIENTE' NOT NULL,
     motivo_cita     VARCHAR2(250) NOT NULL,
     fecha_solicitud DATE NOT NULL,
     id_paciente     NUMBER NOT NULL,
