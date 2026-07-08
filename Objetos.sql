@@ -93,7 +93,7 @@ CREATE TABLE cita (
     hora_fin        DATE NOT NULL,
     estado_cita     VARCHAR2(20) NOT NULL,
     motivo_cita     VARCHAR2(250) NOT NULL,
-    fecha_solicitud DATE DEFAULT SYSDATE NOT NULL,
+    fecha_solicitud DATE NOT NULL,
     id_paciente     NUMBER NOT NULL,
     id_psicologo    NUMBER NOT NULL,
     CONSTRAINT pk_cita PRIMARY KEY (id_cita),
@@ -114,7 +114,7 @@ CREATE TABLE cita (
 CREATE TABLE registro_medico (
     id_registro     NUMBER,
     numero_registro NUMBER NOT NULL,
-    fecha_atencion  DATE DEFAULT SYSDATE NOT NULL,
+    fecha_atencion  DATE NOT NULL,
     estado_clinico  VARCHAR2(100) NOT NULL,
     diagnostico     VARCHAR2(250) NOT NULL,
     observaciones   VARCHAR2(250) NOT NULL,
