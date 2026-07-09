@@ -167,7 +167,6 @@ BEGIN
     DBMS_OUTPUT.PUT_LINE('ID Paciente 3: ' || v_id_paciente_3);
     DBMS_OUTPUT.PUT_LINE('ID Tipo Telefono Paciente 3: ' || v_id_tipotel_3);
 
-
     -- CITAS
 
     registrar_cita(
@@ -181,6 +180,9 @@ BEGIN
         v_resultado
     );
 
+    UPDATE cita
+    SET estado_cita = 'APROBADA'
+    WHERE id_cita = v_id_cita_1;
     DBMS_OUTPUT.PUT_LINE(v_resultado);
     DBMS_OUTPUT.PUT_LINE('ID Cita 1: ' || v_id_cita_1);
 
@@ -247,25 +249,6 @@ BEGIN
         v_id_paciente_2,
         v_id_cita_2,
         v_id_registro_2,
-        v_resultado
-    );
-
-    DBMS_OUTPUT.PUT_LINE(v_resultado);
-    DBMS_OUTPUT.PUT_LINE('ID Registro Medico 2: ' || v_id_registro_2);
-    DBMS_OUTPUT.PUT_LINE('Estado clinico 2: ' || v_estado_clinico);
-
-
-    v_estado_clinico := NULL;
-
-    crear_registro_medico(
-        1,
-        v_estado_clinico,
-        'DIAGNOSTICO DEL PACIENTE KRYSS',
-        'OBSERVACIONES DEL REGISTRO DE KRYSS',
-        v_id_psicologo_1,
-        v_id_paciente_3,
-        v_id_cita_3,
-        v_id_registro_3,
         v_resultado
     );
 

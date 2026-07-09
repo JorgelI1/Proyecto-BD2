@@ -81,7 +81,7 @@ FROM VW_RESUMEN_DNOP;
 
 
 
-SET LINESIZE 32767
+SET LINESIZE 32000
 SET PAGESIZE 50000
 SET WRAP ON
 SET TRIMSPOOL OFF
@@ -93,19 +93,11 @@ SET SERVEROUTPUT ON
 ALTER SESSION SET NLS_DATE_FORMAT = 'DD/MM/YYYY HH24:MI';
 
 SELECT * FROM paciente;
-
 SELECT * FROM psicologo;
-
 SELECT * FROM programas;
-
 SELECT * FROM cita;
-
 SELECT * FROM registro_medico;
-
 SELECT * FROM actividad_grupal;
-
 SELECT * FROM tipo_telefono;
-
 SELECT * FROM telefono;
-
 SELECT * FROM auditoria_estado_cita;
