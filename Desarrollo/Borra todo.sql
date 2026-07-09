@@ -1,22 +1,17 @@
 SET SERVEROUTPUT ON;
 
 BEGIN
-    DBMS_OUTPUT.PUT_LINE('Vaciando tablas...');
-
     DELETE FROM registro_medico;
     DELETE FROM actividad_grupal;
     DELETE FROM telefono;
     DELETE FROM cita;
     DELETE FROM auditoria_estado_cita;
-
     DELETE FROM paciente;
     DELETE FROM tipo_telefono;
     DELETE FROM psicologo;
     DELETE FROM programas;
-
     COMMIT;
-
-    DBMS_OUTPUT.PUT_LINE('Tablas vaciadas correctamente.');
+    DBMS_OUTPUT.PUT_LINE('Se borro todo');
 END;
 /
 
@@ -31,11 +26,9 @@ DECLARE
                     RAISE;
                 END IF;
         END;
-
         EXECUTE IMMEDIATE
             'CREATE SEQUENCE ' || p_nombre ||
             ' START WITH 1 INCREMENT BY 1 NOCACHE NOCYCLE';
-
         DBMS_OUTPUT.PUT_LINE('Secuencia reiniciada: ' || p_nombre);
     END;
 BEGIN
